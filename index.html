@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portal de Relatórios | Cia de Talentos</title>
+  <style>
+    :root {
+      --ct-orange: #F47920;
+      --ct-orange-dark: #d9661a;
+      --ct-orange-light: #fef3e8;
+      --ct-gray: #5a5a5a;
+      --ct-gray-light: #f5f5f5;
+      --ct-border: #e0e0e0;
+      --ct-white: #ffffff;
+      --ct-text: #2c2c2c;
+      --ct-shadow: 0 4px 24px rgba(0,0,0,0.10);
+      --ct-radius: 12px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--ct-gray-light);
+      color: var(--ct-text);
+      min-height: 100vh;
+    }
+
+    /* ─── TELA DE LOGIN ─── */
+    #screen-login {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #fff7f0 0%, #ffe8d0 100%);
+    }
+
+    .login-card {
+      background: var(--ct-white);
+      border-radius: var(--ct-radius);
+      box-shadow: var(--ct-shadow);
+      padding: 48px 40px 40px;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .login-logo {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+
+    .login-logo img {
+      height: 48px;
+      object-fit: contain;
+    }
+
+    .login-logo-fallback {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .login-logo-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--ct-orange);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-logo-icon svg {
+      width: 26px;
+      height: 26px;
+      fill: white;
+    }
+
+    .login-logo-text {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--ct-text);
+      letter-spacing: -0.3px;
+    }
+
+    .login-logo-text span {
+      color: var(--ct-orange);
+    }
+
+    .login-subtitle {
+      text-align: center;
+      font-size: 14px;
+      color: var(--ct-gray);
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ct-gray);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid var(--ct-border);
+      border-radius: 8px;
+      font-size: 15px;
+      color: var(--ct-text);
+      background: var(--ct-white);
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+    }
+
+    .form-group input:focus {
+      border-color: var(--ct-orange);
+      box-shadow: 0 0 0 3px rgba(244, 121, 32, 0.12);
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: 13px;
+      background: var(--ct-orange);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 8px;
+      transition: background 0.2s, transform 0.1s;
+      letter-spacing: 0.2px;
+    }
+
+    .btn-login:hover {
+      background: var(--ct-orange-dark);
+    }
+
+    .btn-login:active {
+      transform: scale(0.98);
+    }
+
+    .login-error {
+      display: none;
+      margin-top: 14px;
+      padding: 10px 14px;
+      background: #fff0f0;
+      border: 1px solid #ffcccc;
+      border-radius: 8px;
+      font-size: 13.5px;
+      color: #c0392b;
+      text-align: center;
+    }
+
+    /* ─── HEADER ─── */
+    .app-header {
+      background: var(--ct-white);
+      border-bottom: 1px solid var(--ct-border);
+      padding: 0 32px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-logo-icon {
+      width: 34px;
+      height: 34px;
+      background: var(--ct-orange);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-logo-icon svg {
+      width: 20px;
+      height: 20px;
+      fill: white;
+    }
+
+    .header-logo-text {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--ct-text);
+    }
+
+    .header-logo-text span {
+      color: var(--ct-orange);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-client-name {
+      font-size: 14px;
+      color: var(--ct-gray);
+      font-weight: 500;
+    }
+
+    .header-client-name strong {
+      color: var(--ct-text);
+    }
+
+    .btn-logout {
+      background: none;
+      border: 1.5px solid var(--ct-border);
+      border-radius: 7px;
+      padding: 6px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ct-gray);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-logout:hover {
+      border-color: var(--ct-orange);
+      color: var(--ct-orange);
+    }
+
+    /* ─── TELA DE RELATÓRIOS ─── */
+    #screen-reports {
+      display: none;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .reports-body {
+      flex: 1;
+      padding: 40px 32px;
+      max-width: 960px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .reports-title {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--ct-text);
+      margin-bottom: 6px;
+    }
+
+    .reports-subtitle {
+      font-size: 15px;
+      color: var(--ct-gray);
+      margin-bottom: 32px;
+    }
+
+    .reports-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .report-card {
+      background: var(--ct-white);
+      border-radius: var(--ct-radius);
+      border: 1.5px solid var(--ct-border);
+      padding: 24px 22px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .report-card:hover {
+      border-color: var(--ct-orange);
+      box-shadow: 0 4px 20px rgba(244, 121, 32, 0.12);
+      transform: translateY(-2px);
+    }
+
+    .report-card-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--ct-orange-light);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .report-card-icon svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--ct-orange);
+    }
+
+    .report-card-name {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--ct-text);
+      line-height: 1.4;
+    }
+
+    .report-card-cta {
+      font-size: 13px;
+      color: var(--ct-orange);
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: auto;
+    }
+
+    .report-card-cta svg {
+      width: 14px;
+      height: 14px;
+      fill: var(--ct-orange);
+      transition: transform 0.2s;
+    }
+
+    .report-card:hover .report-card-cta svg {
+      transform: translateX(3px);
+    }
+
+    /* ─── TELA DO RELATÓRIO (IFRAME) ─── */
+    #screen-viewer {
+      display: none;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .viewer-header {
+      background: var(--ct-white);
+      border-bottom: 1px solid var(--ct-border);
+      padding: 0 24px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-shrink: 0;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+    }
+
+    .btn-back {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: none;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ct-orange);
+      cursor: pointer;
+      padding: 6px 10px 6px 6px;
+      border-radius: 7px;
+      transition: background 0.15s;
+      text-decoration: none;
+    }
+
+    .btn-back:hover {
+      background: var(--ct-orange-light);
+    }
+
+    .btn-back svg {
+      width: 16px;
+      height: 16px;
+      fill: var(--ct-orange);
+    }
+
+    .viewer-separator {
+      width: 1px;
+      height: 22px;
+      background: var(--ct-border);
+    }
+
+    .viewer-report-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--ct-text);
+    }
+
+    #report-iframe {
+      flex: 1;
+      border: none;
+      width: 100%;
+      display: block;
+    }
+
+    .viewer-loading {
+      position: absolute;
+      top: 52px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      background: var(--ct-gray-light);
+      pointer-events: none;
+    }
+
+    .viewer-loading.hidden {
+      display: none;
+    }
+
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid var(--ct-border);
+      border-top-color: var(--ct-orange);
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .viewer-loading p {
+      font-size: 14px;
+      color: var(--ct-gray);
+    }
+
+    /* ─── FOOTER ─── */
+    .app-footer {
+      border-top: 1px solid var(--ct-border);
+      padding: 16px 32px;
+      text-align: center;
+      font-size: 12px;
+      color: #aaa;
+      background: var(--ct-white);
+    }
+
+    /* ─── RESPONSIVO ─── */
+    @media (max-width: 600px) {
+      .login-card {
+        padding: 36px 24px 28px;
+        margin: 16px;
+        max-width: none;
+      }
+      .app-header {
+        padding: 0 16px;
+      }
+      .reports-body {
+        padding: 24px 16px;
+      }
+      .reports-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════
+       TELA 1: LOGIN
+  ═══════════════════════════════════════ -->
+  <div id="screen-login">
+    <div class="login-card">
+      <div class="login-logo">
+        <div class="login-logo-fallback">
+          <div class="login-logo-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 2.61 1.4 4.88 3.5 6.17V17h7v-1.83C17.6 13.88 19 11.61 19 9c0-3.87-3.13-7-7-7zm2 13.5V15H10v.5C8.34 14.36 7 11.8 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 2.8-1.34 5.36-3 6.5zM10 19h4v1h-4v-1zm0 2h4v1h-4v-1z"/>
+            </svg>
+          </div>
+          <div class="login-logo-text">Cia de <span>Talentos</span></div>
+        </div>
+      </div>
+      <p class="login-subtitle">Portal de Relatórios<br>Acesse com suas credenciais</p>
+
+      <div class="form-group">
+        <label for="input-login">Login</label>
+        <input type="text" id="input-login" placeholder="Seu login" autocomplete="username" />
+      </div>
+      <div class="form-group">
+        <label for="input-senha">Senha</label>
+        <input type="password" id="input-senha" placeholder="Sua senha" autocomplete="current-password" />
+      </div>
+      <button class="btn-login" onclick="doLogin()">Entrar</button>
+      <div class="login-error" id="login-error">Login ou senha incorretos. Tente novamente.</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       TELA 2: LISTA DE RELATÓRIOS
+  ═══════════════════════════════════════ -->
+  <div id="screen-reports">
+    <header class="app-header">
+      <div class="header-logo">
+        <div class="header-logo-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 2.61 1.4 4.88 3.5 6.17V17h7v-1.83C17.6 13.88 19 11.61 19 9c0-3.87-3.13-7-7-7zm2 13.5V15H10v.5C8.34 14.36 7 11.8 7 9c0-2.76 2.24-5 5-5s5 2.24 5 5c0 2.8-1.34 5.36-3 6.5zM10 19h4v1h-4v-1zm0 2h4v1h-4v-1z"/>
+          </svg>
+        </div>
+        <div class="header-logo-text">Cia de <span>Talentos</span></div>
+      </div>
+      <div class="header-right">
+        <span class="header-client-name">Olá, <strong id="header-client"></strong></span>
+        <button class="btn-logout" onclick="doLogout()">Sair</button>
+      </div>
+    </header>
+
+    <div class="reports-body">
+      <h1 class="reports-title">Seus Relatórios</h1>
+      <p class="reports-subtitle" id="reports-subtitle">Selecione um relatório para visualizar</p>
+      <div class="reports-grid" id="reports-grid"></div>
+    </div>
+
+    <footer class="app-footer">
+      © <span id="footer-year"></span> Cia de Talentos. Todos os direitos reservados.
+    </footer>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       TELA 3: VISUALIZADOR (IFRAME)
+  ═══════════════════════════════════════ -->
+  <div id="screen-viewer">
+    <div class="viewer-header">
+      <button class="btn-back" onclick="goBackToReports()">
+        <svg viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        Voltar
+      </button>
+      <div class="viewer-separator"></div>
+      <span class="viewer-report-name" id="viewer-report-name"></span>
+    </div>
+    <div style="position:relative; flex:1; display:flex; flex-direction:column;">
+      <div class="viewer-loading" id="viewer-loading">
+        <div class="spinner"></div>
+        <p>Carregando relatório…</p>
+      </div>
+      <iframe id="report-iframe" allowfullscreen></iframe>
+    </div>
+  </div>
+
+  <script>
+    // ─── Estado da sessão ───────────────────────────────────────────────────
+    let currentUser = null;
+    let allUsers = [];
+
+    // ─── Carrega dados do JSON ──────────────────────────────────────────────
+    async function loadData() {
+      try {
+        const res = await fetch('data.json?v=' + Date.now());
+        const data = await res.json();
+        allUsers = data.users || [];
+      } catch (e) {
+        console.error('Erro ao carregar data.json:', e);
+        allUsers = [];
+      }
+    }
+
+    // ─── Login ──────────────────────────────────────────────────────────────
+    async function doLogin() {
+      const login = document.getElementById('input-login').value.trim();
+      const senha = document.getElementById('input-senha').value;
+      const errorEl = document.getElementById('login-error');
+
+      if (!allUsers.length) await loadData();
+
+      const user = allUsers.find(
+        u => u.login === login && u.senha === senha
+      );
+
+      if (user) {
+        currentUser = user;
+        errorEl.style.display = 'none';
+        showReports();
+      } else {
+        errorEl.style.display = 'block';
+        document.getElementById('input-senha').value = '';
+        document.getElementById('input-senha').focus();
+      }
+    }
+
+    // ─── Enter no campo de senha faz login ──────────────────────────────────
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('footer-year').textContent = new Date().getFullYear();
+      loadData();
+
+      document.getElementById('input-senha').addEventListener('keydown', e => {
+        if (e.key === 'Enter') doLogin();
+      });
+      document.getElementById('input-login').addEventListener('keydown', e => {
+        if (e.key === 'Enter') document.getElementById('input-senha').focus();
+      });
+    });
+
+    // ─── Mostra tela de relatórios ──────────────────────────────────────────
+    function showReports() {
+      document.getElementById('screen-login').style.display = 'none';
+      document.getElementById('screen-viewer').style.display = 'none';
+
+      const screenReports = document.getElementById('screen-reports');
+      screenReports.style.display = 'flex';
+
+      document.getElementById('header-client').textContent = currentUser.cliente;
+      document.getElementById('reports-subtitle').textContent =
+        currentUser.relatorios.length === 1
+          ? 'Você tem 1 relatório disponível'
+          : `Você tem ${currentUser.relatorios.length} relatórios disponíveis`;
+
+      const grid = document.getElementById('reports-grid');
+      grid.innerHTML = '';
+
+      currentUser.relatorios.forEach((rel, idx) => {
+        const card = document.createElement('div');
+        card.className = 'report-card';
+        card.setAttribute('role', 'button');
+        card.setAttribute('tabindex', '0');
+        card.innerHTML = `
+          <div class="report-card-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/>
+            </svg>
+          </div>
+          <div class="report-card-name">${escapeHtml(rel.nome)}</div>
+          <div class="report-card-cta">
+            Abrir relatório
+            <svg viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+          </div>
+        `;
+        card.addEventListener('click', () => openReport(rel));
+        card.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') openReport(rel);
+        });
+        grid.appendChild(card);
+      });
+    }
+
+    // ─── Abre relatório no iframe ───────────────────────────────────────────
+    function openReport(rel) {
+      document.getElementById('screen-reports').style.display = 'none';
+      document.getElementById('screen-login').style.display = 'none';
+
+      const screenViewer = document.getElementById('screen-viewer');
+      screenViewer.style.display = 'flex';
+
+      document.getElementById('viewer-report-name').textContent = rel.nome;
+      document.getElementById('viewer-loading').classList.remove('hidden');
+
+      const iframe = document.getElementById('report-iframe');
+      iframe.src = '';
+      iframe.onload = () => {
+        document.getElementById('viewer-loading').classList.add('hidden');
+      };
+      iframe.src = rel.link;
+    }
+
+    // ─── Volta para lista de relatórios ────────────────────────────────────
+    function goBackToReports() {
+      const iframe = document.getElementById('report-iframe');
+      iframe.src = '';
+      showReports();
+    }
+
+    // ─── Logout ─────────────────────────────────────────────────────────────
+    function doLogout() {
+      currentUser = null;
+      document.getElementById('input-login').value = '';
+      document.getElementById('input-senha').value = '';
+      document.getElementById('login-error').style.display = 'none';
+      document.getElementById('screen-reports').style.display = 'none';
+      document.getElementById('screen-viewer').style.display = 'none';
+      document.getElementById('screen-login').style.display = 'flex';
+      document.getElementById('report-iframe').src = '';
+    }
+
+    // ─── Utilitário ─────────────────────────────────────────────────────────
+    function escapeHtml(str) {
+      return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+  </script>
+</body>
+</html>

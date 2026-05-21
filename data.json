@@ -1,0 +1,30 @@
+{
+  "users": [
+    {
+      "cliente": "Teste 1",
+      "login": "Teste1_CT",
+      "senha": "Temp321",
+      "relatorios": [
+        {
+          "nome": "Programa Modelo",
+          "link": "https://app.powerbi.com/view?r=eyJrIjoiOTQ3YjBmZmItMWYzYi00ZmRiLWI2ZTYtYjVmYjMzMTQyNzlmIiwidCI6ImFjOGY0ZWYxLWFmNjAtNDZhOS1hYjdmLTE4OWNjZGI3OWU0YyJ9"
+        }
+      ]
+    },
+    {
+      "cliente": "Teste 2",
+      "login": "Teste2_CT",
+      "senha": "Temp456",
+      "relatorios": [
+        {
+          "nome": "Programa Estágio",
+          "link": "https://app.powerbi.com/view?r=eyJrIjoiNTc4NzNhNWMtMWRhYi00YWU1LThiZTctY2UxZmFiMzEzMGJlIiwidCI6ImFjOGY0ZWYxLWFmNjAtNDZhOS1hYjdmLTE4OWNjZGI3OWU0YyJ9"
+        },
+        {
+          "nome": "Programa Trainee",
+          "link": "https://app.powerbi.com/view?r=eyJrIjoiOThmZTNkYTItMDFlMy00MmVhLWFiZTQtM2JjNTNkYTM1ZTM5IiwidCI6ImFjOGY0ZWYxLWFmNjAtNDZhOS1hYjdmLTE4OWNjZGI3OWU0YyJ9"
+        }
+      ]
+    }
+  ]
+}
